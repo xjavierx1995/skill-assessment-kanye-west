@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class QuotesController extends BaseController
 {
@@ -14,9 +15,31 @@ class QuotesController extends BaseController
    *
    * @return \Illuminate\Http\Response
    */
-  public function getQuotes()
+  public function getQuotes(Request $request)
   {
-    return $this->sendResponse([], 'hola mundo');
+
+    $amount = is_numeric($request->query('amount')) ? intval($request->query('amount')) : 5;
+    $quotes = [];
+    // loop adds quotes to array until there are 5 unique values.
+    for ($i = 0; $i < $amount; $i++) {
+      $response = Http::get('https://api.kanye.rest');
+      $newQuote = $response->json()['quote'];
+      $isDuplicate = false;
+      if ($i != 0) { // first quote always placed into array
+        // looping through array to check if quotes are duplicates
+        for ($j = 0; $j < count($quotes); $j++) {
+          if ($newQuote == $quotes[$j]) {
+            $i--; // don't progess in parent for loop
+            $isDuplicate = true; // prevents duplicate from being added
+          }
+        }
+      }
+      if (!$isDuplicate) {
+        $quotes[] = $newQuote;
+      }
+    }
+
+    return $this->sendResponse($quotes, '');
   }
 
   public function addFavorite(User $user, Request $request)
