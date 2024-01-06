@@ -31,6 +31,10 @@ class RegisterController extends BaseController
   {
     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
       $user = Auth::user();
+
+      if (!$user->canLogin) {
+        return $this->sendError('This user is blocked', ['error' => 'Blocked']);
+      }
       /** @var \App\Models\User $user **/
       $success['token'] =  $user->createToken('authToken')->accessToken;
       $success['user'] =  $user;
