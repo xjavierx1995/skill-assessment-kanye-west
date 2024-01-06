@@ -40,12 +40,34 @@ class RegisterController extends BaseController
     }
   }
 
-  public function updateUser(Request $request, User $user){
+  public function updateUser(Request $request, User $user)
+  {
     $request->validate([
       'name' => 'required',
     ]);
     $user->update($request->all());
 
     return $this->sendResponse($user, 'User updated successfully.');
+  }
+
+  public function blockUser($userId)
+  {
+    $user = User::find($userId);
+    if (!$user) {
+      return $this->sendError('User not found', ['error' => 'not found']);
+    }
+    $user->canLogin = false;
+    return $this->sendResponse($user, 'User blocked successfully.');
+  }
+
+  public function unlockUser($userId)
+  {
+    $user = User::find($userId);
+
+    if (!$user) {
+      return $this->sendError('User not found', ['error' => 'not found']);
+    }
+    $user->canLogin = true;
+    return $this->sendResponse($user, 'User unlocked successfully.');
   }
 }
