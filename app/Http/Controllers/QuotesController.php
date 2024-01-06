@@ -7,7 +7,8 @@ use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Auth;
 class QuotesController extends BaseController
 {
   /**
@@ -18,19 +19,26 @@ class QuotesController extends BaseController
   public function getQuotes(Request $request)
   {
 
+    $user = Auth::user();
+
+    $executed = RateLimiter::attempt('send-message:'.$user->id, 30, function() {});
+
+    if (!$executed) {
+      return $this->sendError('You may try again in 60 seconds.', ['error' => 'Too Many Attempts.'], 429);
+    }
+
     $amount = is_numeric($request->query('amount')) ? intval($request->query('amount')) : 5;
     $quotes = [];
-    // loop adds quotes to array until there are 5 unique values.
+
     for ($i = 0; $i < $amount; $i++) {
       $response = Http::get('https://api.kanye.rest');
       $newQuote = $response->json()['quote'];
       $isDuplicate = false;
-      if ($i != 0) { // first quote always placed into array
-        // looping through array to check if quotes are duplicates
+      if ($i != 0) {
         for ($j = 0; $j < count($quotes); $j++) {
           if ($newQuote == $quotes[$j]) {
-            $i--; // don't progess in parent for loop
-            $isDuplicate = true; // prevents duplicate from being added
+            $i--;
+            $isDuplicate = true;
           }
         }
       }
