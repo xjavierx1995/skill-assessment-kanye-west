@@ -37,9 +37,12 @@ class QuotesController extends BaseController
 
   public function deleteFavorite(Favorite $favorite)
   {
-
     $favorite->delete();
-
     return $this->sendResponse(null, 'Favorite eliminated');
+  }
+
+  public function myFavorites(User $user)
+  {
+    return $this->sendResponse($user->favorites, 'Favorites found');
   }
 }
