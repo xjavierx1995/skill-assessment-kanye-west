@@ -21,4 +21,6 @@ Route::post('login', [RegisterController::class, 'login']);
 Route::middleware('auth:api')->group(function () {
   Route::put('/update-user/{user}', [RegisterController::class, 'updateUser']);
   Route::get('/quotes', [QuotesController::class, 'getQuotes']);
+  Route::post('/add-favorite/{user}', [QuotesController::class, 'addFavorite']);
+  Route::delete('/delete-favorite/{favorite}', [QuotesController::class, 'deleteFavorite']);
 });

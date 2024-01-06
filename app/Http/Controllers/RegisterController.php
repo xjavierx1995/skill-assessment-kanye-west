@@ -33,7 +33,7 @@ class RegisterController extends BaseController
       $user = Auth::user();
       /** @var \App\Models\User $user **/
       $success['token'] =  $user->createToken('authToken')->accessToken;
-      $success['name'] =  $user->name;
+      $success['user'] =  $user;
       return $this->sendResponse($success, 'User login successfully.');
     } else {
       return $this->sendError('Unauthorised.', ['error' => 'Unauthorised']);
