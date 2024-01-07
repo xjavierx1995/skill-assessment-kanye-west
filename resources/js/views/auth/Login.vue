@@ -75,7 +75,7 @@ watch(password, async (newPass, oldPass) => {
 </script>
 <style scoped>
 .p-card {
-  background-color: #6f43e075;
+  background-color: #6f43e085;
   color: white !important;
 }
 
