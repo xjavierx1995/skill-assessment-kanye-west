@@ -3,3 +3,8 @@
 </template>
 <script setup lang="ts">
 </script>
+<style>
+  body {
+    background-color: #4a52ed1a;
+  }
+</style>
