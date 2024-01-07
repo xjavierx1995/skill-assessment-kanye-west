@@ -1,4 +1,5 @@
 <template>
+  <h3>Your favorites quotes of Ye</h3>
   <div class="grid">
     <div class="col" v-for="(item, index) in store.favorites" :key="index">
       <QuoteCard :quote-text="item.quote"/>

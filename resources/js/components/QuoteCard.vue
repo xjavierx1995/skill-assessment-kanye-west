@@ -1,7 +1,9 @@
 <template>
   <Card style="height: 100%;">
     <template #title>
-      <Button label="Favorito" />
+      <div class="text-right	">
+        <Button icon="pi pi-star" rounded text />
+      </div>
     </template>
     <template #content>
       <p class="m-0 font-bold font-italic">
@@ -21,3 +23,11 @@ defineProps<{
   quoteText?: string
 }>()
 </script>
+<style scoped>
+::v-deep .p-card-body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+</style>

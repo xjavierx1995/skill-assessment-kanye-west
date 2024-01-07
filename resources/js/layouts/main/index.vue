@@ -23,7 +23,7 @@ import Toolbar from 'primevue/toolbar';
 import sidebarVue from './sidebar.vue';
 </script>
 
-<style>
+<style scoped>
 .layout-auth {
   display: flex;
   justify-content: center;
@@ -36,7 +36,7 @@ import sidebarVue from './sidebar.vue';
   background: #6f43e085;
   border-radius: 0;
 
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 
   font-size: 1.2em;
   font-weight: bold;

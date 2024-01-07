@@ -12,7 +12,7 @@
 import Toolbar from 'primevue/toolbar';
 
 </script>
-<style>
+<style scoped>
 .layout-auth {
   display: flex;
   justify-content: center;
