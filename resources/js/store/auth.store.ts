@@ -6,9 +6,9 @@ import { userStore } from "./user.store";
 import router from "../router";
 
 export const authStore = defineStore('auth', {
-  state: () => ({
+  state: (): AuthStore => ({
     access_token: ''
-  } as AuthStore),
+  }),
   getters: {
 
   },
