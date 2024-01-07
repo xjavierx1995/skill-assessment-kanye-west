@@ -7,7 +7,6 @@ import { Favorites } from "../interfaces/Favorites.interface";
 export const userStore = defineStore('user', {
   state: (): UserStore => ({
     user: undefined,
-    favorites: []
   }),
   getters: {
     isLogged(): boolean {
@@ -15,9 +14,6 @@ export const userStore = defineStore('user', {
     }
   },
   actions: {
-    async getFavorites() {
-      const { data } = await axios.get<BaseResponse<Favorites[]>>(`/my-favorites/${this.user?.id}`);
-      this.favorites = data.data;
-    }
+
   },
 })

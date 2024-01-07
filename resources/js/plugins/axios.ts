@@ -28,7 +28,7 @@ instance.interceptors.request.use(
       config.headers = {
         'Authorization': `Bearer ${auth.access_token}`,
         'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
+        // 'Content-Type': 'application/x-www-form-urlencoded'
       }
     }
     return config;
