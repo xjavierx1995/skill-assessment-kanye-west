@@ -2,19 +2,26 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
 import MainIndex from '../layouts/main/index.vue';
 import AuthIndex from '../layouts/auth/index.vue';
+import { userStore } from '../store/user.store'
+
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '',
     component: MainIndex,
+    meta: {
+      requiresAuth: true
+    },
     children: [
       {
-        path: '/',
+        path: 'home',
         name: 'Home',
         component: () => import("../views/Home.vue"),
-        meta: {
-          requiresAuth: true
-        },
+      },
+      {
+        path: 'favorites',
+        name: 'Favorites',
+        component: () => import("../views/Favorites.vue"),
       },
     ]
   },
@@ -23,11 +30,16 @@ const routes: Array<RouteRecordRaw> = [
     component: AuthIndex,
     children: [
       {
-        path: '/login',
+        path: 'login',
         name: 'Login',
         component: () => import("../views/auth/Login.vue"),
       },
     ]
+  },
+
+  {
+    path: '/:catchAll(.*)',
+    redirect: 'home'
   },
 ];
 
@@ -37,13 +49,20 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const store = userStore();
+
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (false) {//TODO: validate if user is authenticated
+    if (store.isLogged) {
       next();
     } else {
-      next({ name: "Login" });
+      next({ path: '/auth/login' });
     }
   } else {
+    if (to.name === 'Login' && store.isLogged) {
+      next({ path: '/home' });
+      return;
+    }
+
     next();
   }
 });
