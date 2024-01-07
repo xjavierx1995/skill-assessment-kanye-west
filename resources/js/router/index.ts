@@ -1,14 +1,34 @@
 // src/router/index.js
-import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router';
+import MainIndex from '../layouts/main/index.vue';
+import AuthIndex from '../layouts/auth/index.vue';
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    component: MainIndex,
+    children: [
+      {
+        path: '/',
+        name: 'Home',
+        component: () => import("../views/Home.vue"),
+        meta: {
+          requiresAuth: true
+        },
+      },
+    ]
   },
-  // Agrega aquí más rutas según sea necesario
+  {
+    path: '/auth',
+    component: AuthIndex,
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import("../views/auth/Login.vue"),
+      },
+    ]
+  },
 ];
 
 const router = createRouter({
@@ -16,4 +36,15 @@ const router = createRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (false) {//TODO: validate if user is authenticated
+      next();
+    } else {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
+});
 export default router;

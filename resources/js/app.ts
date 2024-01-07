@@ -1,4 +1,4 @@
-// app.js
+// app.ts
 import './bootstrap';
 
 import {createApp} from 'vue';
