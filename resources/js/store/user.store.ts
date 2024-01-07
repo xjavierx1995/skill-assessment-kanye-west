@@ -22,6 +22,22 @@ export const userStore = defineStore('user', {
       } catch (error) {
         console.log(error);
       }
+    },
+    async blockUser(userId) {
+      try {
+        await axios.put<BaseResponse<User[]>>(`/block-user/${userId}`);
+        this.getUsers();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async unlockUser(userId) {
+      try {
+        await axios.put<BaseResponse<User[]>>(`/unlock-user/${userId}`);
+        this.getUsers();
+      } catch (error) {
+        console.log(error);
+      }
     }
   },
 })

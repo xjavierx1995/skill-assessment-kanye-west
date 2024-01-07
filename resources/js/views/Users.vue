@@ -10,7 +10,10 @@
           </span>
         </template>
         <div class="flex justify-content-end">
-          <Button label="Block user" severity="danger"/>
+          <Button
+            @click="item.canLogin ? user.blockUser(item.id) : user.unlockUser(item.id)"
+            :label="item.canLogin ? 'Block user' : 'Unlock user'"
+            :severity="item.canLogin ? 'danger' : ''"/>
         </div>
         <p class="m-1 font-bold font-italic text-center" v-for="quote in item.favorites"> “{{ quote.quote }}” </p>
       </AccordionTab>

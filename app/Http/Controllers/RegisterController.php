@@ -61,6 +61,7 @@ class RegisterController extends BaseController
       return $this->sendError('User not found', ['error' => 'not found']);
     }
     $user->canLogin = false;
+    $user->save();
     return $this->sendResponse($user, 'User blocked successfully.');
   }
 
@@ -72,12 +73,13 @@ class RegisterController extends BaseController
       return $this->sendError('User not found', ['error' => 'not found']);
     }
     $user->canLogin = true;
+    $user->save();
     return $this->sendResponse($user, 'User unlocked successfully.');
   }
 
   public function getUsers()
   {
     $users = User::with('favorites')->where('isAdmin', false)->get();
-    return $this->sendResponse($users, 'User unlocked successfully.');
+    return $this->sendResponse($users, 'Users list.');
   }
 }
