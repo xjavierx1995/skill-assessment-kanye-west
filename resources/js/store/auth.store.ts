@@ -21,9 +21,12 @@ export const authStore = defineStore('auth', {
         console.log('no se puede logear');
         return;
       }
+
       this.access_token = data.data.token;
       storeUser.user = data.data.user;
-      router.push('/home');
+
+      data.data.user.isAdmin ? router.push('/users') : router.push('/home');
+
     }
   },
 })

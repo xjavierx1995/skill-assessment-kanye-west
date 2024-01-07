@@ -4,7 +4,7 @@
       <template #header>
         <div class="flex align-items-center gap-2">
           <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
-          <span class="font-bold">Amy Elsner</span>
+          <span class="font-bold">{{ user?.name }}</span>
         </div>
       </template>
 
@@ -12,12 +12,12 @@
       <Menu :model="items">
         <template #item="{ item, props }">
           <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-            <a  :href="href" v-bind="props.action" @click="navigate">
+            <a :href="href" v-bind="props.action" @click="navigate">
               <span :class="item.icon" />
               <span class="ml-2">{{ item.label }}</span>
             </a>
           </router-link>
-          <a v-else  :href="item.url" :target="item.target" v-bind="props.action">
+          <a v-else :href="item.url" :target="item.target" v-bind="props.action">
             <span :class="item.icon" />
             <span class="ml-2">{{ item.label }}</span>
           </a>
@@ -33,13 +33,12 @@ import Sidebar from 'primevue/sidebar';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
 import Menu from 'primevue/menu';
-
-
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import router from '../../router/index';
+import { userStore } from '../../store/user.store';
 
+const { user } = userStore();
 const visible = ref(false);
-
 const items = ref([
   {
     label: 'Quotes',
@@ -55,4 +54,15 @@ const items = ref([
   }
 ]);
 
+onMounted(() => {
+  if (user?.isAdmin) {
+    items.value = [
+      {
+        label: 'Users',
+        icon: 'pi pi-users',
+        route: '/users'
+      }
+    ]
+  }
+})
 </script>

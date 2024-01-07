@@ -74,4 +74,10 @@ class RegisterController extends BaseController
     $user->canLogin = true;
     return $this->sendResponse($user, 'User unlocked successfully.');
   }
+
+  public function getUsers()
+  {
+    $users = User::with('favorites')->where('isAdmin', false)->get();
+    return $this->sendResponse($users, 'User unlocked successfully.');
+  }
 }

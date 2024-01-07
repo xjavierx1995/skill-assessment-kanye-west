@@ -2,7 +2,7 @@ import { Favorites } from "./Favorites.interface";
 
 export interface UserStore {
   user: User | undefined;
-  // favorites: Favorites[];
+  usersList: User[];
 }
 
 export interface User {
@@ -11,4 +11,5 @@ export interface User {
   email: string;
   isAdmin: boolean;
   canLogin: boolean;
+  favorites?: Favorites[];
 }

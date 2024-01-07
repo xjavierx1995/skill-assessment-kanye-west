@@ -23,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Favorites',
         component: () => import("../views/Favorites.vue"),
       },
+      {
+        path: 'users',
+        name: 'Users',
+        component: () => import("../views/Users.vue"),
+      },
     ]
   },
   {
@@ -59,7 +64,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     if (to.name === 'Login' && store.isLogged) {
-      next({ path: '/home' });
+      store.user?.isAdmin ? next({ path: '/users' }) : next({ path: '/home' });
       return;
     }
 
