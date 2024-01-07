@@ -24,7 +24,6 @@ instance.interceptors.response.use(
 instance.interceptors.request.use(
   async config => {
     const auth = authStore();
-    console.log(config.url);
     if(config.url !== '/login' && config.url !== '/register') {
       config.headers = {
         'Authorization': `Bearer ${auth.access_token}`,
