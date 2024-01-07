@@ -36,8 +36,10 @@ import Menu from 'primevue/menu';
 import { onMounted, ref } from "vue";
 import router from '../../router/index';
 import { userStore } from '../../store/user.store';
+import { authStore } from '../../store/auth.store';
 
 const { user } = userStore();
+const { logout } = authStore();
 const visible = ref(false);
 const items = ref([
   {
@@ -64,5 +66,13 @@ onMounted(() => {
       }
     ]
   }
+
+  items.value.push({
+    label: 'Logout',
+    icon: 'pi pi-power-off',
+    command: () => {
+      logout();
+    }
+  })
 })
 </script>

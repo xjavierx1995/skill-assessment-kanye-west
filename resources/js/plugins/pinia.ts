@@ -1,5 +1,5 @@
 //Pinia
-import { createPinia } from "pinia";
+import { Pinia, Store, createPinia, getActivePinia } from "pinia";
 import { createPersistedState } from 'pinia-plugin-persistedstate';
 
 //available stores

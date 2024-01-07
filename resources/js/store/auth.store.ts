@@ -4,6 +4,7 @@ import { BaseResponse } from "../interfaces/BaseResponse.interface";
 import { AuthResponse, AuthStore } from "../interfaces/Auth.interface";
 import { userStore } from "./user.store";
 import router from "../router";
+import { quoteStore } from "./quote.store";
 
 export const authStore = defineStore('auth', {
   state: (): AuthStore => ({
@@ -27,6 +28,13 @@ export const authStore = defineStore('auth', {
 
       data.data.user.isAdmin ? router.push('/users') : router.push('/home');
 
-    }
+    },
+    async logout() {
+      sessionStorage.clear();
+      userStore().$reset();
+      authStore().$reset();
+      quoteStore().$reset();
+      router.push('/login');
+    },
   },
 })
