@@ -2,7 +2,7 @@ import { defineStore } from "pinia"
 import axios from '../plugins/axios';
 import { User, UserStore } from "../interfaces/UserStore.interface";
 import { BaseResponse } from "../interfaces/BaseResponse.interface";
-import { Favorites } from "../interfaces/Favorites.interface";
+import ToastEventBus from 'primevue/toasteventbus';
 
 export const userStore = defineStore('user', {
   state: (): UserStore => ({
@@ -35,6 +35,21 @@ export const userStore = defineStore('user', {
       try {
         await axios.put<BaseResponse<User[]>>(`/unlock-user/${userId}`);
         this.getUsers();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateProfile(name: string) {
+      try {
+        const { data } = await axios.put<BaseResponse<User>>(`/update-user/${this.user?.id}`, { name });
+        this.user = data.data;
+
+        ToastEventBus.emit('add', {
+          severity: 'success',
+          summary: 'Update complete',
+          detail: 'User updated successfuly',
+          life: 5000
+        });
       } catch (error) {
         console.log(error);
       }

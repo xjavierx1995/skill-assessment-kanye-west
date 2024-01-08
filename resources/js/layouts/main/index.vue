@@ -12,7 +12,7 @@
     </template>
 
     <template #end>
-      <ProfileModalVue/>
+      <ProfileModalVue :hide-sm="true"/>
     </template>
   </Toolbar>
   <div class="m-3">
