@@ -35,7 +35,7 @@
     <template #footer>
       <div class="flex justify-content-between">
         <Button  icon="pi pi-user" label="Login" @click="router.push('/auth/login')"/>
-        <Button :disabled="!formValidated" icon="pi pi-user" label="register" @click="register"/>
+        <Button :disabled="!formValidated" :loading="loading.isLoading.value" icon="pi pi-user" label="register" @click="register"/>
       </div>
     </template>
   </Card>
@@ -48,8 +48,11 @@ import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import router from '../../router';
+import { storeToRefs } from 'pinia';
+import { loadingStore } from '../../store/loading.store';
 
 const store = authStore();
+const loading = storeToRefs(loadingStore());
 
 const email = ref('');
 const name = ref('');

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { authStore } from '../store/auth.store';
 import ToastEventBus from 'primevue/toasteventbus';
+import { loadingStore } from '../store/loading.store';
+import { storeToRefs } from 'pinia';
 
 const instance = axios.create({
   baseURL: 'http://localhost:8000/api',
@@ -8,9 +10,13 @@ const instance = axios.create({
 
 instance.interceptors.response.use(
   response => {
+    const loading = storeToRefs(loadingStore());
+    loading.isLoading.value = false;
     return response;
   },
   error => {
+    const loading = storeToRefs(loadingStore());
+    loading.isLoading.value = false;
     if (error.message === 'Network Error') {
       // Manejar error de red aquí
     }
@@ -28,7 +34,10 @@ instance.interceptors.response.use(
 // Request interceptor for API calls
 instance.interceptors.request.use(
   async config => {
+    const loading = storeToRefs(loadingStore());
     const auth = authStore();
+
+    loading.isLoading.value = true;
     if(config.url !== '/login' && config.url !== '/register') {
       config.headers = {
         'Authorization': `Bearer ${auth.access_token}`,
