@@ -44,6 +44,12 @@ php artisan serve
 npm run dev
 ```
 
+If you want to test features, execute this comand:
+```bash
+php artisan test
+```
+BEFORE EXECUTE, YOU HAVE TO CREATE A TABLE NAMED `testing`
+
 You can access with this credentials:
 
 For admin

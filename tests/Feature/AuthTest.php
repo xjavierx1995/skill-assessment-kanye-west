@@ -76,44 +76,4 @@ class AuthTest extends TestCase
     ]);
   }
 
-  /* public function test_edit_user()
-  {
-    $body = [
-      'email' => $this->userEmail,
-      'password' => $this->userPass
-    ];
-    $responseLogin = $this->postJson($this->routeLogin, $body, $this->header);
-    $responseLogin->assertStatus(200);
-    $responseLogin->assertJsonStructure(['user', 'access_token']);
-
-    $token = $responseLogin['access_token'];
-    $userId = $responseLogin['user']['id'];
-
-    $bodyEdit = [
-      'email' => 'admin@edit.com',
-      'name' => 'admin edit'
-    ];
-
-    $responseUser = $this->withHeaders([
-      'Authorization' => $this->typeAuthorization . $token
-    ])->postJson("/api/editUser/$userId", $bodyEdit, $this->header);
-    $responseUser->assertStatus(200);
-    $responseUser->assertJsonStructure(['user', 'access_token']);
-    $responseUser->assertJsonStructure([
-      'user' => [
-        'id',
-        'name',
-        'role',
-        'email',
-        'email_verified_at',
-        'created_at',
-        'updated_at'
-      ],
-    ]);
-    $responseUser
-      ->assertJsonFragment([
-        'email' => 'admin@edit.com',
-        'name' => 'admin edit'
-      ]);
-  } */
 }
