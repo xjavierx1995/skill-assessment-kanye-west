@@ -32,7 +32,7 @@
         </template>
         <template #footer>
           <div class="flex justify-content-between">
-            <Button icon="pi pi-pencil" label="Update" @click="update" :disabled="!formValidated" />
+            <Button icon="pi pi-pencil" :loading="loading.isLoading.value" label="Update" @click="update" :disabled="!formValidated" />
           </div>
         </template>
       </Card>
@@ -49,6 +49,7 @@ import InputText from 'primevue/inputtext';
 import { Ref, computed, ref, watch } from "vue";
 import { userStore } from '../store/user.store';
 import { storeToRefs } from 'pinia';
+import { loadingStore } from '../store/loading.store';
 defineProps<{
   invertAvatar?: boolean,
   hideSm?: boolean
@@ -56,12 +57,12 @@ defineProps<{
 
 const { user, updateProfile } = userStore();
 const userRef = storeToRefs(userStore());
+const loading = storeToRefs(loadingStore());
 const visible = ref(false);
 const name = ref(user?.name);
 const nameErrors: Ref<string[]> = ref([]);
 
 const formValidated = computed(() => !!name.value && nameErrors.value.length === 0);
-
 function update() {
   updateProfile(name.value!);
 }
