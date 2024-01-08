@@ -15,9 +15,12 @@ import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/lara-light-green/theme.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
+import ToastService from 'primevue/toastservice';
+
 
 createApp(App)
   .use(pinia)
   .use(router)
+  .use(ToastService)
   .use(PrimeVue)
   .mount("#app");

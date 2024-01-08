@@ -107,7 +107,7 @@ watch(cPassword, async (newPass, oldPass) => {
     return;
   }
 
-  passErrors.value = [];
+  cPassErrors.value = [];
 })
 
 watch(name, async (newName, oldPass) => {

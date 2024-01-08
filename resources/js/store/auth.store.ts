@@ -31,7 +31,7 @@ export const authStore = defineStore('auth', {
 
         data.data.user.isAdmin ? router.push('/users') : router.push('/home');
       } catch (error: any) {
-        console.log(error.response.data.message);
+        console.log(error);
 
       }
     },

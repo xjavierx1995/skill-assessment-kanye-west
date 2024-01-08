@@ -30,7 +30,7 @@
 </template>
 <script setup lang="ts">
 import { authStore } from '../../store/auth.store';
-import { Ref, computed, ref, watch } from 'vue';
+import { Ref, computed, ref, watch, onMounted } from 'vue';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';

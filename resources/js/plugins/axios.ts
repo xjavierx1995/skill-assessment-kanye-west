@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { authStore } from '../store/auth.store';
-import router from '../router';
+import ToastEventBus from 'primevue/toasteventbus';
+
 const instance = axios.create({
   baseURL: 'http://localhost:8000/api',
 });
@@ -14,8 +15,12 @@ instance.interceptors.response.use(
       // Manejar error de red aquí
     }
 
-    console.error('Ha ocurrido un error');
-
+    ToastEventBus.emit('add', {
+      severity: 'error',
+      summary: error.response.data.data ? error.response.data.data.error : '',
+      detail: error.response.data.message,
+      life: 5000
+    });
     return Promise.reject(error);
   }
 );
