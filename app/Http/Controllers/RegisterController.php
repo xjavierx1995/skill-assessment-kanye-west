@@ -19,6 +19,8 @@ class RegisterController extends BaseController
     ]);
 
     $input = $request->all();
+    $input['isAdmin'] = false;
+    $input['canLogin'] = true;
     $input['password'] = bcrypt($input['password']);
     $user = User::create($input);
     $success['token'] =  $user->createToken('authToken')->accessToken;
