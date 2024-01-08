@@ -39,8 +39,11 @@ export const quoteStore = defineStore('quote', {
     },
     async deleteFavorite(favoriteId) {
       try {
+        const { user } = userStore();
         await axios.delete<BaseResponse<null>>(`/delete-favorite/${favoriteId}`);
-        this.getFavorites();
+        if (!user?.isAdmin) {
+          this.getFavorites();
+        }
       } catch (error) {
         console.log(error);
       }

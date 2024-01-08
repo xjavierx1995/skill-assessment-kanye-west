@@ -22,7 +22,7 @@
     </template>
     <template #footer>
       <div class="flex justify-content-between">
-        <Button icon="pi pi-user" label="register" @click="router.push('/auth/register')" />
+        <Button icon="pi pi-user" label="register" @click.stop="router.push('/auth/register')" />
         <Button :disabled="!formValidated" icon="pi pi-user" label="Login" @click="login" />
       </div>
     </template>

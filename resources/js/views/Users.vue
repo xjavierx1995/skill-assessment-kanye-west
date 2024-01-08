@@ -15,7 +15,13 @@
             :label="item.canLogin ? 'Block user' : 'Unlock user'"
             :severity="item.canLogin ? 'danger' : ''"/>
         </div>
-        <p class="m-1 font-bold font-italic text-center" v-for="quote in item.favorites"> “{{ quote.quote }}” </p>
+        <p class="m-1 font-bold font-italic text-center flex align-items-center" v-for="quote in item.favorites">
+          “{{ quote.quote }}”
+          <Button
+          severity="danger" text link
+          @click="deleteUserFavorite(quote.id)"
+          icon="pi pi-trash"/>
+        </p>
       </AccordionTab>
 
     </Accordion>
@@ -31,10 +37,17 @@ import AccordionTab from 'primevue/accordiontab';
 import Badge from 'primevue/badge';
 import Avatar from 'primevue/avatar';
 import Button from 'primevue/button';
+import { quoteStore } from '../store/quote.store';
 
 const user = userStore();
+const quote = quoteStore();
 
 onMounted(() => {
   user.getUsers();
 })
+
+function deleteUserFavorite(favoriteId: number) {
+  quote.deleteFavorite(favoriteId);
+  user.getUsers();
+}
 </script>

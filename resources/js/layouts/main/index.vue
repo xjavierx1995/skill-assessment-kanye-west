@@ -23,11 +23,9 @@
 <script setup lang="ts">
 import Toolbar from 'primevue/toolbar';
 import sidebarVue from './sidebar.vue';
-import Avatar from 'primevue/avatar';
 import { userStore } from '../../store/user.store';
 import ProfileModalVue from '../../components/ProfileModal.vue';
 
-const { user } = userStore()
 </script>
 
 <style scoped>
