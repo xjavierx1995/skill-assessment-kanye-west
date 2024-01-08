@@ -3,7 +3,7 @@
     <template #header>
       <!-- <img alt="user header" src="https://www.mansworldindia.com/wp-content/uploads/2022/05/Kanye-West-Donda.jpg" /> -->
     </template>
-    <template #title> Init session </template>
+    <template #title> Register </template>
     <template #content>
       <div class="card flex flex-column justify-content-center gap-2">
 
@@ -13,17 +13,29 @@
             <small class="p-error" id="text-error">{{  emailErrors[0] || '&nbsp;' }}</small>
           </div>
 
+          <div class="flex flex-column gap-2 justify-content-center">
+            <label for="name" style="color: white;">Name</label>
+            <InputText id="name" v-model="name" type="text" :class="{ 'p-invalid': nameErrors.length > 0 }"/>
+            <small class="p-error" id="text-error">{{  nameErrors[0] || '&nbsp;' }}</small>
+          </div>
+
           <div class="flex gap-2 flex-column justify-content-center">
             <label for="pass" style="color: white;">Password</label>
             <Password toggleMask id="pass" v-model="password" />
             <small class="p-error" id="text-error">{{  passErrors[0] || '&nbsp;' }}</small>
           </div>
+
+          <div class="flex gap-2 flex-column justify-content-center">
+            <label for="c_pass" style="color: white;">Confirm Password</label>
+            <Password toggleMask id="c_pass" v-model="cPassword" />
+            <small class="p-error" id="text-error">{{  cPassErrors[0] || '&nbsp;' }}</small>
+          </div>
         </div>
     </template>
     <template #footer>
       <div class="flex justify-content-between">
-        <Button icon="pi pi-user" label="register" @click="router.push('/auth/register')" />
-        <Button :disabled="!formValidated" icon="pi pi-user" label="Login" @click="login" />
+        <Button :disabled="!formValidated" icon="pi pi-user" label="Login" @click="router.push('/auth/login')"/>
+        <Button icon="pi pi-user" label="register" @click="register"/>
       </div>
     </template>
   </Card>
@@ -40,18 +52,26 @@ import router from '../../router';
 const store = authStore();
 
 const email = ref('');
+const name = ref('');
 const password = ref('');
+const cPassword = ref('');
 const emailErrors: Ref<string[]> = ref([]);
+const nameErrors: Ref<string[]> = ref([]);
 const passErrors: Ref<string[]> = ref([]);
+const cPassErrors: Ref<string[]> = ref([]);
 
 const formValidated = computed(() =>
   !!email.value &&
+  !!name.value &&
   !!password.value &&
+  !!cPassword.value &&
+  nameErrors.value.length === 0 &&
+  cPassErrors.value.length === 0 &&
   emailErrors.value.length === 0 &&
   passErrors.value.length === 0)
 
-function login() {
-  store.login(email.value, password.value);
+function register() {
+  store.register(name.value, email.value, password.value, cPassword.value);
 }
 
 watch(email, async (newEmail, oldEmail) => {
@@ -74,6 +94,29 @@ watch(password, async (newPass, oldPass) => {
   }
 
   passErrors.value = [];
+})
+
+watch(cPassword, async (newPass, oldPass) => {
+  if (newPass === '') {
+    cPassErrors.value = ['Confirm Password field is required'];
+    return;
+  }
+
+  if (newPass !== password.value) {
+    cPassErrors.value = ['Passwords are not equal'];
+    return;
+  }
+
+  passErrors.value = [];
+})
+
+watch(name, async (newName, oldPass) => {
+  if (newName === '') {
+    nameErrors.value = ['Name field is required'];
+    return;
+  }
+
+  nameErrors.value = [];
 })
 </script>
 <style scoped>

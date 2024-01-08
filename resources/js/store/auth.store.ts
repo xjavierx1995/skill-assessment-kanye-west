@@ -15,26 +15,46 @@ export const authStore = defineStore('auth', {
   },
   actions: {
     async login(email: string, password: string) {
-      const storeUser = userStore();
-      const { data } = await axios.post<BaseResponse<AuthResponse>>('/login', { email, password });
+      try {
 
-      if (!data.data.user.canLogin) {
-        console.log('no se puede logear');
-        return;
+
+        const storeUser = userStore();
+        const { data } = await axios.post<BaseResponse<AuthResponse>>('/login', { email, password });
+
+        if (!data.data.user.canLogin) {
+          console.log('no se puede logear');
+          return;
+        }
+
+        this.access_token = data.data.token;
+        storeUser.user = data.data.user;
+
+        data.data.user.isAdmin ? router.push('/users') : router.push('/home');
+      } catch (error: any) {
+        console.log(error.response.data.message);
+
       }
+    },
 
-      this.access_token = data.data.token;
-      storeUser.user = data.data.user;
+    async register(name: string, email: string, password: string, c_password: string) {
+      try {
+        const storeUser = userStore();
+        const { data } = await axios.post<BaseResponse<AuthResponse>>('/register', { email, password, name, c_password });
 
-      data.data.user.isAdmin ? router.push('/users') : router.push('/home');
+        this.access_token = data.data.token;
+        storeUser.user = data.data.user;
+        router.push('/home');
+      } catch (error: any) {
+        console.log(error);
 
+      }
     },
     async logout() {
       sessionStorage.clear();
       userStore().$reset();
       authStore().$reset();
       quoteStore().$reset();
-      router.push('/login');
+      router.push('/auth/login');
     },
   },
 })
