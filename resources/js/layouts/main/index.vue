@@ -12,10 +12,7 @@
     </template>
 
     <template #end>
-      <div class="hidden sm:flex justify-content-end align-items-center gap-2 w-full">
-        <span class="font-bold white-space-nowrap">{{ user?.name }}</span>
-        <Avatar image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8Oh2pOkK3_kY4SEner5CgepYCgOKeRKg31A&usqp=CAU" shape="circle" />
-      </div>
+      <ProfileModalVue/>
     </template>
   </Toolbar>
   <div class="m-3">
@@ -28,6 +25,7 @@ import Toolbar from 'primevue/toolbar';
 import sidebarVue from './sidebar.vue';
 import Avatar from 'primevue/avatar';
 import { userStore } from '../../store/user.store';
+import ProfileModalVue from '../../components/ProfileModal.vue';
 
 const { user } = userStore()
 </script>

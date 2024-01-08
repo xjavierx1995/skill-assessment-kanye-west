@@ -2,10 +2,7 @@
   <div class="card flex justify-content-center">
     <Sidebar v-model:visible="visible" header="Sidebar">
       <template #header>
-        <div class="flex align-items-center gap-2">
-          <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" />
-          <span class="font-bold">{{ user?.name }}</span>
-        </div>
+        <ProfileModalVue :invert-avatar="true"/>
       </template>
 
 
@@ -37,6 +34,7 @@ import { onMounted, ref } from "vue";
 import router from '../../router/index';
 import { userStore } from '../../store/user.store';
 import { authStore } from '../../store/auth.store';
+import ProfileModalVue from '../../components/ProfileModal.vue';
 
 const { user } = userStore();
 const { logout } = authStore();
