@@ -13,6 +13,7 @@ Route::middleware('auth:api')->group(function () {
   Route::put('/update-user/{user}', [RegisterController::class, 'updateUser']);
   Route::put('/block-user/{userId}', [RegisterController::class, 'blockUser'])->middleware('isAdmin');
   Route::put('/unlock-user/{user}', [RegisterController::class, 'unlockUser'])->middleware('isAdmin');
+  Route::get('/get-users', [RegisterController::class, 'getUsers'])->middleware('isAdmin');
 
   //Quotes
   Route::get('/quotes', [QuotesController::class, 'getQuotes']);

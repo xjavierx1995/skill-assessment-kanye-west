@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
+});
+
+Route::fallback(function () {
+    return view('app'); // Puedes cambiar '404' por la vista que desees mostrar para páginas no encontradas
 });
