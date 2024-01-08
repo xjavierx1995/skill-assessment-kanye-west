@@ -2,7 +2,7 @@
   <div class="card flex justify-content-center">
     <Sidebar v-model:visible="visible" header="Sidebar">
       <template #header>
-        <ProfileModalVue :invert-avatar="true"/>
+        <ProfileModalVue :hide-sm="false" :invert-avatar="true"/>
       </template>
 
 

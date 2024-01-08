@@ -62,6 +62,11 @@ router.beforeEach((to, from, next) => {
   const store = userStore();
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+
+    if (store.isLogged && store.user?.isAdmin && to.name !== 'Users') {
+      next({ path: '/users' });
+      return;
+    }
     if (store.isLogged) {
       next();
     } else {

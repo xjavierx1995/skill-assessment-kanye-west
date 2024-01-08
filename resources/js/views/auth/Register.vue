@@ -34,8 +34,8 @@
     </template>
     <template #footer>
       <div class="flex justify-content-between">
-        <Button :disabled="!formValidated" icon="pi pi-user" label="Login" @click="router.push('/auth/login')"/>
-        <Button icon="pi pi-user" label="register" @click="register"/>
+        <Button  icon="pi pi-user" label="Login" @click="router.push('/auth/login')"/>
+        <Button :disabled="!formValidated" icon="pi pi-user" label="register" @click="register"/>
       </div>
     </template>
   </Card>

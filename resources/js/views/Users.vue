@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-if="user.user?.isAdmin">
     <Accordion :activeIndex="0">
       <AccordionTab v-for="(item, index) in user.usersList" :key="index">
         <template #header>
@@ -20,6 +20,8 @@
 
     </Accordion>
   </div>
+
+  <h1 v-else> You are not allowed to see this page 😡🤬 </h1>
 </template>
 <script setup lang="ts">
 import { onMounted } from 'vue';

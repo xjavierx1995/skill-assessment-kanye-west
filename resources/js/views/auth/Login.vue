@@ -3,7 +3,7 @@
     <template #header>
       <!-- <img alt="user header" src="https://www.mansworldindia.com/wp-content/uploads/2022/05/Kanye-West-Donda.jpg" /> -->
     </template>
-    <template #title> Init session </template>
+    <template #title> Init to joy!! </template>
     <template #content>
       <div class="card flex flex-column justify-content-center gap-2">
 
